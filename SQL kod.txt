@@ -1,0 +1,29 @@
+-- Создание базы данных
+CREATE DATABASE tv_programs;
+
+-- Использование базы данных
+USE tv_programs;
+
+-- Таблица для хранения каналов
+CREATE TABLE channels (
+    id INT AUTO_INCREMENT PRIMARY KEY,  -- Уникальный идентификатор канала
+    name VARCHAR(255) NOT NULL          -- Название канала
+);
+
+-- Таблица для хранения жанров
+CREATE TABLE genres (
+    id INT AUTO_INCREMENT PRIMARY KEY,  -- Уникальный идентификатор жанра
+    name VARCHAR(255) NOT NULL          -- Название жанра
+);
+
+-- Таблица для хранения программ
+CREATE TABLE programs (
+    id INT AUTO_INCREMENT PRIMARY KEY,  -- Уникальный идентификатор программы
+    channel_id INT NOT NULL,            -- ID канала (внешний ключ)
+    genre_id INT NOT NULL,              -- ID жанра (внешний ключ)
+    program_name VARCHAR(255) NOT NULL, -- Название программы
+    day_of_week ENUM('Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье') NOT NULL,
+    start_time TIME NOT NULL,           -- Время начала программы
+    FOREIGN KEY (channel_id) REFERENCES channels(id) ON DELETE CASCADE,
+    FOREIGN KEY (genre_id) REFERENCES genres(id) ON DELETE CASCADE
+);
